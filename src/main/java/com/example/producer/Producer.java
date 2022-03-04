@@ -1,6 +1,6 @@
 package com.example.producer;
 
-import com.example.config.RabbitMQConfig;
+import com.example.config.Config;
 import com.example.entity.Employee;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,7 @@ public class Producer {
 
     public void sendHello(Employee employee) throws JsonProcessingException {
         var json = objectMapper.writeValueAsString(employee);
-        rabbitTemplate.convertAndSend(RabbitMQConfig.TEST_QUEUE, json);
+        rabbitTemplate.convertAndSend(Config.TEST_QUEUE, json);
     }
 
 }
