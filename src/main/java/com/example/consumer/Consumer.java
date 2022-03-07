@@ -17,11 +17,11 @@ public class Consumer {
 
     private final ObjectMapper objectMapper;
 
-    @RabbitListener(queues = Config.TEST_QUEUE, concurrency = "3-7")
-    public void consume(Message message) throws JsonProcessingException {
-        var json = new String(message.getBody());
-        var employee = objectMapper.readValue(json, Employee.class);
-        log.info("Consuming employee = {}, thread = {}", employee, Thread.currentThread().getName());
-    }
+//    @RabbitListener(queues = Config.TEST_QUEUE, concurrency = "3-7")
+//    public void consume(Message message) throws JsonProcessingException {
+//        var json = new String(message.getBody());
+//        var employee = objectMapper.readValue(json, Employee.class);
+//        log.info("Consuming employee = {}, thread = {}", employee, Thread.currentThread().getName());
+//    }
 
 }

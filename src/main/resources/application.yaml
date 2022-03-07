@@ -3,3 +3,8 @@ spring:
      addresses: localhost:5672
      username: guest
      password: guest
+     listener:
+       direct:
+         acknowledge-mode: manual
+         retry:
+           enabled: true

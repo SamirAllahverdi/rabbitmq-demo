@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.entity.Employee;
+import com.example.entity.Picture;
 import com.example.producer.Producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,13 @@ public class RabbitmqDemoApplication {
     @GetMapping
     public String produce() throws JsonProcessingException {
         producer.sendHello(new Employee(new Random().nextInt(), "Samir", LocalDate.now()));
+        return "OK";
+    }
+
+
+    @GetMapping("/retry")
+    public String retry() throws JsonProcessingException {
+        producer.sendRetry(new Picture("Mona Liza", "classic", "news", 10000));
         return "OK";
     }
 
