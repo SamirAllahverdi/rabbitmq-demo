@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+//@Component
 @Slf4j
 @RequiredArgsConstructor
 public class RejectConsumer {
@@ -24,26 +24,26 @@ public class RejectConsumer {
     private final ObjectMapper objectMapper;
 
     // Automatic Rejection
-//    @RabbitListener(queues = Config.TEST_QUEUE)
-//    public void listen(String message) throws IOException {
-//        var employee = objectMapper.readValue(message, Employee.class);
-//        if (employee.getId() > 9000) {
-//			throw new AmqpRejectAndDontRequeueException("Wrong employee id" + employee.getId());
-//        }
-//        log.info("Consuming employee = {}", employee);
-//    }
+    @RabbitListener(queues = Config.TEST_QUEUE)
+    public void listen(String message) throws IOException {
+        var employee = objectMapper.readValue(message, Employee.class);
+        if (employee.getId() > 9000) {
+			throw new AmqpRejectAndDontRequeueException("Wrong employee id" + employee.getId());
+        }
+        log.info("Consuming employee = {}", employee);
+    }
 
-//    // Manual Rejection
-//    @RabbitListener(queues = Config.TEST_QUEUE)
-//    public void listen(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
-//        var employee = objectMapper.readValue(message, Employee.class);
-//
-//        if (employee.getId() > 9000) {
-//            channel.basicReject(tag, false);
-//            return;
-//        }
-//
-//        log.info("Consuming employee = {}", employee);
-//        channel.basicAck(tag, false);
-//    }
+    // Manual Rejection
+    @RabbitListener(queues = Config.TEST_QUEUE)
+    public void listen(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
+        var employee = objectMapper.readValue(message, Employee.class);
+
+        if (employee.getId() > 9000) {
+            channel.basicReject(tag, false);
+            return;
+        }
+
+        log.info("Consuming employee = {}", employee);
+        channel.basicAck(tag, false);
+    }
 }

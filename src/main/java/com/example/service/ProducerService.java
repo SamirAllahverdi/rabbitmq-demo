@@ -1,4 +1,4 @@
-package com.example.producer;
+package com.example.service;
 
 import com.example.config.Config;
 import com.example.entity.Employee;
@@ -7,11 +7,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class Producer {
+public class ProducerService {
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -24,7 +24,7 @@ public class Producer {
 
     public void sendRetry(Picture picture) throws JsonProcessingException {
         var json = objectMapper.writeValueAsString(picture);
-        rabbitTemplate.convertAndSend(Config.GUIDELINE_IMAGE_WORK_QUEUE, json);
+        rabbitTemplate.convertAndSend(Config.GUIDELINE_IMAGE_WORK_EXCHANGE, picture.getType(), json);
     }
 
 }

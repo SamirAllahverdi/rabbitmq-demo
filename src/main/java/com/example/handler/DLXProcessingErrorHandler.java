@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 
 @Slf4j
-public class DlxProcessingErrorHandler {
+public class DLXProcessingErrorHandler {
 
 
     @NonNull
@@ -20,7 +20,7 @@ public class DlxProcessingErrorHandler {
     private int maxRetryCount = 3;
 
 
-    public DlxProcessingErrorHandler(String deadExchangeName) throws IllegalArgumentException {
+    public DLXProcessingErrorHandler(String deadExchangeName) throws IllegalArgumentException {
         super();
         if (deadExchangeName.isEmpty()) {
             throw new IllegalArgumentException("Must define dlx exchange name");
@@ -29,7 +29,7 @@ public class DlxProcessingErrorHandler {
     }
 
     //override maxRetryCount
-    public DlxProcessingErrorHandler(String deadExchangeName, int maxRetryCount) {
+    public DLXProcessingErrorHandler(String deadExchangeName, int maxRetryCount) {
         this(deadExchangeName);
         setMaxRetryCount(maxRetryCount);
     }
@@ -51,7 +51,6 @@ public class DlxProcessingErrorHandler {
             log.warn("[HANDLER-FAILED] Error at " + LocalDateTime.now() + " on retry "
                     + rabbitMqHeader.getFailedRetryCount() + " for message " + new String(message.getBody()));
         }
-
     }
 
     public void setMaxRetryCount(int maxRetryCount) throws IllegalArgumentException {

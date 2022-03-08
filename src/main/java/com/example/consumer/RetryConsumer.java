@@ -2,11 +2,10 @@ package com.example.consumer;
 
 import com.example.config.Config;
 import com.example.entity.Picture;
-import com.example.handler.DlxProcessingErrorHandler;
+import com.example.handler.DLXProcessingErrorHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
@@ -17,15 +16,14 @@ import java.io.IOException;
 
 @Component
 @Slf4j
-public class RetryImageConsumer {
+public class RetryConsumer {
 
-
-    private final DlxProcessingErrorHandler dlxProcessingErrorHandler;
+    private final DLXProcessingErrorHandler dlxProcessingErrorHandler;
     private final ObjectMapper objectMapper;
 
-    public RetryImageConsumer(ObjectMapper objectMapper) {
+    public RetryConsumer(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.dlxProcessingErrorHandler = new DlxProcessingErrorHandler(Config.GUIDELINE_DEAD_EXCHANGE);
+        this.dlxProcessingErrorHandler = new DLXProcessingErrorHandler(Config.GUIDELINE_DEAD_EXCHANGE);
     }
 
     @RabbitListener(queues = Config.GUIDELINE_IMAGE_WORK_QUEUE, ackMode = "MANUAL")
@@ -36,7 +34,6 @@ public class RetryImageConsumer {
                 throw new IOException("Size too large");
             } else {
                 log.info("Creating thumbnail & publishing : " + p);
-                log.info(String.valueOf(deliveryTag));
                 channel.basicAck(deliveryTag, false);
             }
         } catch (IOException e) {
