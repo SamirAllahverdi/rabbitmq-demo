@@ -2,9 +2,8 @@ This is the simple spring boot application which cover different types of rabbit
 
 For running application, be sure to have rabbitmq in your local machine.
 
-
 Then use postman collection in _/postman_ directory to create queues and exchanges
 
-At last, uncomment corresponding consumer **@Component** annotation for using consumers
+Uncomment corresponding consumer **@Component** annotation for using consumers
 
 For push messages to queue, use **ProducerController**
