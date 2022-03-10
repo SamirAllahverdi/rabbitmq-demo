@@ -27,4 +27,8 @@ public class ProducerService {
         rabbitTemplate.convertAndSend(Config.GUIDELINE_IMAGE_WORK_EXCHANGE, picture.getType(), json);
     }
 
+    public void springRetry(Picture picture) throws JsonProcessingException {
+        var json = objectMapper.writeValueAsString(picture);
+        rabbitTemplate.convertAndSend(Config.SPRING_WORK_EXCHANGE, picture.getType(), json);
+    }
 }

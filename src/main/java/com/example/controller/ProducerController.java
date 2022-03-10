@@ -29,5 +29,9 @@ public class ProducerController {
         return "OK";
     }
 
-
+    @GetMapping("/spring-retry")
+    public String springRetry() throws JsonProcessingException {
+        producerService.springRetry(new Picture("Mona Liza", "jpg", "news", 10000));
+        return "OK";
+    }
 }
